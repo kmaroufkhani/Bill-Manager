@@ -1,0 +1,129 @@
+﻿@model BillTimeScheduler.Models.ApplicationUser
+@{
+    decimal BillsTotal = 0; //For total amount of bills
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-12 Box">
+            <br />
+            <center><h4><strong>Upcoming Bills</strong></h4></center>
+            <button class="btn">
+                @Html.ActionLink("Insert Bill", "Create", "Bills", new { List = "Index" }, null)
+            </button>
+            <br />
+            <br />
+            @if (Model.Bills != null && Model.PayCheck != null)
+            {
+                <table class="table">
+                    <tr>
+                        <th>
+                            Title
+                        </th>
+                        <th>
+                            Amount
+                        </th>
+                        <th>
+                            Due Date
+                        </th>
+                        <th>
+                            Days Left
+                        </th>
+                    </tr>
+
+                    @foreach (var item in Model.Bills)
+                    {
+                        if (item.DueDate.Date >= DateTime.Now.Date && item.DueDate.Date <= Model.PayCheck.PayDate)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Title)
+                                </td>
+                                <td width="20%">
+                                    $
+                                    @Html.DisplayFor(modelItem => item.Amount)
+                                </td>
+                                @if (item.DueDate.Date == DateTime.Now.Date)
+                                {
+                                    <td>
+                                        <strong style="color: red;">Paid Today</strong>
+                                    </td>
+                                    <td>
+                                        <span style="color: red;">-</span>
+                                    </td>
+                                }
+                                else
+                                {
+                                    BillsTotal += item.Amount;
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DueDate)
+                                    </td>
+                                    <td>
+                                        @((item.DueDate.Subtract(DateTime.Now).Days) + 1)
+                                    </td>
+                                }
+                                <td>
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id, List = "Index" }) |
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id, List = "Index" })
+                                </td>
+                            </tr>
+                        }
+                    }
+                </table>
+                <hr />
+                <h4 dir="rtl">Total: $@BillsTotal</h4>
+                <br />
+            }
+            else
+            {
+                <center><h3>No bills inserted OR income information is incomplete</h3></center>
+            }
+        </div>
+
+        <div class="col-md-5 col-md-offset-1 col-12 Box">
+            <br />
+            <center><h4><strong>Income Information</strong></h4></center>
+            <button class="btn">
+                @Html.ActionLink("Modify Income", "SetIncome", "Bills", null, null)
+            </button>
+            <br />
+            <br />
+            @if (Model.PayCheck != null)
+            {
+            <table class="table">
+                <tr>
+                    <th>
+                        Balance
+                    </th>
+                    <td>$@Html.DisplayFor(modelItem => Model.PayCheck.Balance)</td>
+                </tr>
+                <tr>
+                    <th>Paycheck: </th>
+                    <td>$@Model.PayCheck.Amount every @Model.PayCheck.Frequency days.</td>
+                </tr>
+                <tr>
+                    <th> Next Paycheck (MM/DD/YYYY) </th>
+                    <td>@Html.DisplayFor(modelItem => Model.PayCheck.PayDate)</td>
+                </tr>
+                <tr>
+                    @if (Model.PayCheck.PayDate.Date == DateTime.Now.Date)
+                    {
+                        <td>
+                            <strong style="color: red;">Paid Today</strong>
+                        </td>
+                    }
+                    else
+                    {
+                        <td style="color: red;">
+                            @((Model.PayCheck.PayDate.Subtract(DateTime.Now).Days) + 1) days until payday.
+                        </td>
+                    }
+                </tr>                
+            </table>
+            }
+            else {
+                <center><h3>Income Information Not Set</h3></center>
+            }
+        </div>
+    </div>
+</div>
+

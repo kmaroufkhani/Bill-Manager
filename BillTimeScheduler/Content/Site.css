@@ -1,0 +1,74 @@
+﻿body {
+    background: linear-gradient(white, #BABABA);
+    padding-top: 50px;
+    padding-bottom: 20px;
+    height: 100vh;
+    font-family: 'Comic Sans MS';
+}
+
+.Box {
+    border: inset 3px grey;
+    margin-top: 2em;
+    border-radius: 10px;
+    background: linear-gradient(#EFEEEE, white);
+}
+
+.Box:hover{
+    box-shadow: 3px 8px 8px 0 grey;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* 
+   Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.navbar:hover {
+    box-shadow: 3px 8px 8px 0 grey;
+}
+
+li {
+    color: greenyellow;
+}
+
+.nav-element {
+    border: solid 2px white;
+    border-radius: 50px;
+    margin-right: 5px;
+    text-align: center;
+    width: 100px;
+    background: linear-gradient(blue, black);
+}
+
+.nav-element:hover {
+    background: linear-gradient(red, black);
+}
+
+.logo {
+    border-radius: 50px;
+    border: solid 2px #3dbdb5;
+    background: linear-gradient(green, green, white, white, red, red);
+    margin-right: 5px;
+    color: black !important;
+}
+
+.logo:hover {
+    background: linear-gradient(217deg, green, green, white, white, red, red);
+}
+
+

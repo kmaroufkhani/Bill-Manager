@@ -1,0 +1,51 @@
+﻿@model IEnumerable<BillTimeScheduler.Models.Bill>
+
+@{
+    decimal BillsTotal = 0;
+    foreach (var item in Model)
+    {
+        BillsTotal += item.Amount;
+    }
+}
+    <center><h2>List of Bills</h2></center>
+
+    <button class="btn btn-lg">
+        @Html.ActionLink("Add a Bill", "Create", "Bills", new { List = "BillsList" }, null)
+    </button>
+    <br />
+    <h4 dir="rtl">Total Per Month: $@BillsTotal</h4>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Day)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    $
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Day)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id, List = "BillsList" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id, List = "BillsList" })
+                </td>
+            </tr>
+        }
+
+    </table>
